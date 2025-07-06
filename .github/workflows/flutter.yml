@@ -13,22 +13,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Show Flutter & Dart version
-        run: flutter --version
-
-      - name: Install Flutter SDK
-        uses: dart-lang/setup-dart@v2
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
         with:
-          sdk: flutter
           flutter-version: '3.22.0'
 
-      - name: Show Flutter & Dart version (after install)
+      - name: Check Flutter version
         run: flutter --version
 
-      - name: Install dependencies
+      - name: Get dependencies
         run: flutter pub get
 
-      - name: Analyze code
+      - name: Analyze
         run: flutter analyze
 
       - name: Run tests
