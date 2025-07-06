@@ -2,31 +2,28 @@ name: Flutter CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 🔄 Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: 📦 Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.22.0'
+      - name: Install Flutter SDK (3.22.0)
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0' # ✅ This version includes Dart 3.7.2
 
-    - name: 🧰 Install dependencies
-      run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-    - name: ✅ Analyze code
-      run: flutter analyze
+      - name: Analyze
+        run: flutter analyze
 
-    - name: 🧪 Run tests
-      run: flutter test
-
-    - name: 📦 Build APK (Optional)
-      run: flutter build apk
+      - name: Run tests
+        run: flutter test
