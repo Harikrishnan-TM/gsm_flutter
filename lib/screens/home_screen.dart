@@ -21,9 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _logout() async {
     await AuthService.logout();
-    if (context.mounted) {
-      Navigator.pushReplacementNamed(context, '/login');
-    }
+    if (!mounted) return; // ✅ Ensures context is safe
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   @override

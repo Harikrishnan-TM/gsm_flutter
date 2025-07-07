@@ -20,6 +20,8 @@ class _SignupScreenState extends State<SignupScreen> {
       _passwordController.text,
     );
 
+    if (!mounted) return; // ✅ prevent context usage if widget disposed
+
     if (success) {
       // Auto-login after signup
       final loginSuccess = await AuthService.login(
@@ -27,10 +29,20 @@ class _SignupScreenState extends State<SignupScreen> {
         _passwordController.text,
       );
 
+      if (!mounted) return;
+
       if (loginSuccess) {
         final token = await AuthService.getToken();
+
+        if (!mounted) return;
+
         if (token != null) {
           Navigator.pushReplacementNamed(context, '/home');
+        } else {
+          setState(() {
+            _error = "Signup succeeded but token not found.";
+            _success = null;
+          });
         }
       } else {
         setState(() {
@@ -54,10 +66,19 @@ class _SignupScreenState extends State<SignupScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            if (_error != null) Text(_error!, style: const TextStyle(color: Colors.red)),
-            if (_success != null) Text(_success!, style: const TextStyle(color: Colors.green)),
-            TextField(controller: _usernameController, decoration: const InputDecoration(labelText: 'Username')),
-            TextField(controller: _passwordController, obscureText: true, decoration: const InputDecoration(labelText: 'Password')),
+            if (_error != null)
+              Text(_error!, style: const TextStyle(color: Colors.red)),
+            if (_success != null)
+              Text(_success!, style: const TextStyle(color: Colors.green)),
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              controller: _passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(labelText: 'Password'),
+            ),
             const SizedBox(height: 16),
             ElevatedButton(onPressed: _signup, child: const Text("Signup")),
             TextButton(

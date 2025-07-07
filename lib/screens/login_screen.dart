@@ -19,8 +19,13 @@ class _LoginScreenState extends State<LoginScreen> {
       _passwordController.text,
     );
 
+    if (!mounted) return; // ✅ Prevent using context after async gap
+
     if (success) {
       final token = await AuthService.getToken();
+
+      if (!mounted) return; // ✅ Still check again after await
+
       if (token != null) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
