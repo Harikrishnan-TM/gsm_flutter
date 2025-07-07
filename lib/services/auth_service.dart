@@ -14,8 +14,8 @@ class AuthService {
     body: jsonEncode({'username': username, 'password': password}),
   );
 
-  print('Signup response code: ${response.statusCode}');
-  print('Signup response body: ${response.body}');
+  //print('Signup response code: ${response.statusCode}');
+  //print('Signup response body: ${response.body}');
 
   return response.statusCode == 201;
   }
