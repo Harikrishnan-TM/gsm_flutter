@@ -8,13 +8,18 @@ class AuthService {
 
   // 🔐 Signup method
   static Future<bool> signup(String username, String password) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/signup/'),
-      body: {'username': username, 'password': password},
-    );
+  final response = await http.post(
+    Uri.parse('$baseUrl/api/signup/'),
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'username': username, 'password': password}),
+  );
 
-    return response.statusCode == 201;
+  print('Signup response code: ${response.statusCode}');
+  print('Signup response body: ${response.body}');
+
+  return response.statusCode == 201;
   }
+
 
   // 🔐 Login method
   static Future<bool> login(String username, String password) async {
