@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static const String baseUrl = "https://gsm-backend.fly.dev/api";
+  //static const String baseUrl = "https://gsm-backend.fly.dev/api";
+  static const String baseUrl = "https://gsm-backend.fly.dev";
 
   // 🔐 Signup method
   static Future<bool> signup(String username, String password) async {
