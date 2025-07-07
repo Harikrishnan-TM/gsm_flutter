@@ -15,7 +15,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.3'  # ✅ Updated to match working config
+          flutter-version: '3.29.3'  # ✅ Match your local Flutter version
 
       - name: Install dependencies
         run: flutter pub get
@@ -25,3 +25,12 @@ jobs:
 
       #- name: Run Tests
       #  run: flutter test
+
+      - name: Build release APK
+        run: flutter build apk --release
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

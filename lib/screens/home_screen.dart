@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/virtual_stock.dart';
 import '../services/api_service.dart';
+import '../services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,11 +19,25 @@ class _HomeScreenState extends State<HomeScreen> {
     _futureStocks = ApiService.fetchStocks();
   }
 
+  void _logout() async {
+    await AuthService.logout();
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Virtual Stock Market'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: _logout,
+            tooltip: 'Logout',
+          ),
+        ],
       ),
       body: FutureBuilder<List<VirtualStock>>(
         future: _futureStocks,
