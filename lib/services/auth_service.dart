@@ -24,7 +24,7 @@ class AuthService {
   // 🔐 Login method
   static Future<bool> login(String username, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/token/'),
+      Uri.parse('$baseUrl/api/token/'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username, 'password': password}),
     );
